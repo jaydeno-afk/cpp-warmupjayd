@@ -121,8 +121,29 @@ int main() {
     // =================================================================
 
     cout << "=== Q1 ===\n";
-
-
+    int valids=0,pos=0,finalpos,consecvalids=0;
+    vector<int> conses;
+    double heavy=morningWeights[0],sum=0;
+    for (double i:morningWeights){
+        sum+=i;
+        if (0.0<i and i<=80.0){
+            valids+=1;
+            consecvalids+=1;
+        }else{
+            conses.push_back(consecvalids);
+            consecvalids=0;
+        }
+        if (i>heavy){
+            heavy=i;
+            finalpos=pos;
+        }
+        pos+=1;
+    }
+    double maximum=*max_element(conses.begin(),conses.end());
+    cout<<"Total: "<<sum<<"kg"<<'\n';
+    cout<<"Valid: "<<valids<<" of "<<"12"<<'\n';
+    cout<<"Heaviest: "<<heavy<<" kg"<<" at position "<<finalpos<<'\n';
+    cout<<"Longest Valid Run: "<<maximum<<'\n';
 
 
 
