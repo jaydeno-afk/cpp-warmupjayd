@@ -84,6 +84,8 @@ void printBoard(const vector<int> &b) {
     for (int i = 1; i <= 16; i++) cout << b[i] << " ";
     cout << "\n";
 }
+int findFarmer(const vector<Delivery> &log, string name);
+
 
 
 int main() {
@@ -195,6 +197,29 @@ int main() {
     // =================================================================
 
     cout << "=== Q3 ===\n";
+    cout<<findFarmer(logbook,"Isanda")<<'\n';
+    cout<<findFarmer(logbook,"Mukamana")<<'\n';
+    map<string,pair<int,double>> mostest;
+    for (Delivery d:logbook){
+        mostest[d.farmer].first++;
+        mostest[d.farmer].second+=d.kg;
+
+    }
+    int mostcount=0;
+    double mostkg=0;
+    string countname, kgname;
+    for (auto d: mostest){
+        if (d.second.second>mostkg){
+            kgname=d.first;
+            mostkg=d.second.second;
+        }
+        if (d.second.first>mostcount){
+            countname=d.first;
+            mostcount=d.second.first;
+        }
+    }
+    cout<<"Most deliveries: "<<countname<<"("<<mostcount<<")"<<"\n";
+    cout<<"Most kg: "<<kgname<<"("<<mostkg<<")"<<"\n";
 
 
 
@@ -268,6 +293,19 @@ int main() {
 
     return 0;
 }
+int findFarmer(const vector<Delivery> &log, string name){
+    int count=0;
+    for (Delivery d:log){
+        if (d.farmer==name){
+            return count;
+        }else{
+            count+=1;
+        }
+
+    }
+    return -1;
+}
+
 
 
 // =====================================================================
