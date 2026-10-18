@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
 using namespace std;
 
 /**
@@ -156,6 +157,30 @@ int main() {
     // =================================================================
 
     cout << "=== Q2 ===\n";
+    map<char,vector<double>> grades;
+    grades['A']=vector<double>(3);
+    grades['B']=vector<double>(3);
+    grades['C']=vector<double>(3);
+
+    for (Delivery d: logbook){
+         if (d.grade=='A'){
+            grades['A'][0]+=1;
+            grades['A'][1]+=d.kg;
+         }else if (d.grade=='B'){
+            grades['B'][0]+=1;
+            grades['B'][1]+=d.kg;
+         }else if (d.grade=='C'){
+            grades['C'][0]+=1;
+            grades['C'][1]+=d.kg;
+         }
+         
+    }
+    grades['A'][2]=grades['A'][1]/grades['A'][0];
+         grades['B'][2]=grades['B'][1]/grades['B'][0];
+         grades['C'][2]=grades['C'][1]/grades['C'][0];
+         cout<<"Grade A: "<<grades['A'][0]<<" deliveries "<< grades['A'][1]<<" kg total "<< grades['A'][2]<<" average"<<'\n';
+         cout<<"Grade B: "<<grades['B'][0]<<" deliveries "<< grades['B'][1]<<" kg total "<< grades['B'][2]<<" average"<<'\n';
+         cout<<"Grade C: "<<grades['C'][0]<<" deliveries "<< grades['C'][1]<<" kg total "<< grades['C'][2]<<" average"<<'\n';
 
 
 
