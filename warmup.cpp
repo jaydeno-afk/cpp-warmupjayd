@@ -347,7 +347,32 @@ int main() {
     // =================================================================
 
     cout << "=== Q6 ===\n";
-
+    bool turn=true;
+    int bnumb=6;
+    int land,lap=0;
+    while (turn){
+        lap++;
+        int pick=board[bnumb];
+        board[bnumb]=0;
+        for (int seeds=0;seeds<pick;seeds++){
+            int drop=(bnumb+seeds)%16+1;
+            board[drop]++;
+            if (seeds==pick-1){
+                if (board[drop]-1==0){
+                    land=drop;
+                    turn=false;
+                }else{
+                    bnumb=drop;
+                }
+            }
+        }
+    }
+    cout<<"Final board: ";
+    for (int i : board){
+        cout<<i<<' ';
+    }
+    cout<<'\n';
+    cout<<"Landed in pit "<<land<<" after "<<lap<<" laps";
 
 
     
