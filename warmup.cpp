@@ -234,7 +234,23 @@ int main() {
     // =================================================================
 
     cout << "=== Q4 ===\n";
-
+    string farmname;
+    double weight,tots;
+    for (Delivery d:logbook){
+        weight=d.kg*450.0;
+        if (d.grade=='A'){
+            weight+=weight*0.1;
+        }else if(d.grade=='C'){
+            weight-=weight*0.2;
+        }
+        if (tots>=100000.0){
+            weight-=weight*0.5;
+        }
+        tots+=weight;
+        cout<<d.farmer<<' '<<d.kg<<" kg "<< " grade "<<d.grade<<" -> "<<weight<<'\n';
+        
+    }
+    cout<<"Total paid: "<<tots;
 
 
 
@@ -248,10 +264,80 @@ int main() {
     // =================================================================
 
     cout << "=== Q5 ===\n";
+    int rejects=0, accepted=0;
+    for (RawRecord r: rawRecords){
+        if (r.id.size()!=4){
+            cout <<r.id<< " REJECT - bad id\n";
+            rejects++;
+            continue;
+        }
+        int count=1;
+        bool rejected=false;
+        for (char k : r.id){
+            if (count==1){
+                count++;
+                if (k!='F'){
+                    cout<< r.id<<" REJECT - bad id\n";
+                    rejected=true;
+                    break;
+                }
+            }else{
+                if (!isdigit(k)){
+                    cout<<r.id<<" REJECT - bad id\n";
+                    rejected=true;
+                    break;
+                }
+            }
+        }
+        if (rejected){
+            rejects++;
+            continue;
+        }
+        string s=r.kg;
+        if (s.empty()){
+            cout<<r.id<<" REJECT - weight missing\n";
+            rejects++;
+            continue;
+        }
+        bool isNumber = true;
+        int dots = 0;
 
+        for (char c : s) {
+            if (c == '.') {
+                dots++;
+                if (dots > 1) {
+                    isNumber = false;
+                    break;
+                }
+            }else if (!isdigit(c)) {
+                isNumber = false;
+                break;
+            }
+        }
+        if (!isNumber){
+            cout<<r.id<<" REJECT - weight not a number\n";
+            rejects++;
+            continue;
+        }
+        double w=stod(s);
+        if (w<=0 || w>80){
+            cout<<r.id << " REJECT - weight out of range\n";
+            rejects++;
+            continue;
+        }
+        char grade = toupper(r.grade);
 
+        if (grade != 'A' && grade != 'B' && grade != 'C') {
+            cout << r.id << " REJECT - unknown grade\n";
+            rejects++;
 
-
+            continue;
+        }
+                cout <<r.id<< " ACCEPT\n";
+                accepted++;
+            }    
+            
+                    cout << accepted << " accepted, " << rejects<< " rejected.";
 
     cout << "\n";
 
